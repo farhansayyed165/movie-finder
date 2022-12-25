@@ -26,3 +26,9 @@ function showMovies(movies){
         movie_display(moviedataobj);
     })
 }
+
+function movie_display(imovie){
+    const movieElm = document.createElement("div");
+    movieElm.classList.add("movie-card")
+    movieElm.innerHTML = '<div class="card"> <img src="${imovie.Poster}" alt = "Poster" width = 300px height = 300px/></div>'
+}
