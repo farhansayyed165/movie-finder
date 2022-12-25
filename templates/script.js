@@ -1,5 +1,6 @@
-const api_url = 'http://www.omdbapi.com/apikey.aspx?VERIFYKEY=1e4c370b-f11a-45a3-9caa-54b0773b01cf';
-const api_url_search = ' http://www.omdbapi.com/?i=tt3896198&apikey=57f800fa';
+// const api_url = 'http://www.omdbapi.com/apikey.aspx?VERIFYKEY=1e4c370b-f11a-45a3-9caa-54b0773b01cf';
+const api_url = 'http://www.omdbapi.com/?i=tt3896198&apikey=57f800fa&s='
+const api_url_search = ' http://www.omdbapi.com/?apikey=57f800fa&i=';
 
 var search_inp = document.getElementById("search-input");
 var card = document.getElementById("movie-cards")
@@ -13,9 +14,27 @@ document.getElementsByClassName("search")[0].addEventListener("click", function(
 
 async function getMovies(url){
     const resp = await fetch(url);
-    const respdata = await resp.join()
+    const respdata = await resp.json()
     console.log(respdata);
     showMovies(respdata.Search)
+}
+
+
+
+function movie_display(imovie){
+    const movieElm = document.createElement("div");
+    movieElm.classList.add("movie-card");
+    movieElm.innerHTML = `<div class="card">
+                             <img src="${imovie.Poster}" alt = "Poster" width = 300px height = 300px/>
+                             <br>
+                             <div class="movie-description">
+                                <span class = "movie-titile"><b>Title</b><span class="value">${imovie.Title}</span></span> 
+                                <span class = "movie-titile"><b>Title</b><span class="value">${imovie.imdbRating} </span></span>
+                                <span class = "movie-titile"><b>Title</b><span class="value">${imovie.Director} </span></span>
+                                <span class = "movie-titile"><b>Title</b><span class="value">${imovie.Released} </span></span>
+                                <span class = "movie-titile"><b>Title</b><span class="value">${imovie.Genre} </span></span>
+                            </div>`;
+    card.appendChild(movieElm)
 }
 
 function showMovies(movies){
@@ -25,10 +44,4 @@ function showMovies(movies){
         const moviedataobj = await movieData.json();
         movie_display(moviedataobj);
     })
-}
-
-function movie_display(imovie){
-    const movieElm = document.createElement("div");
-    movieElm.classList.add("movie-card")
-    movieElm.innerHTML = '<div class="card"> <img src="${imovie.Poster}" alt = "Poster" width = 300px height = 300px/></div>'
 }
